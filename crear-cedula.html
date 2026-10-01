@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tierra Tica RP - Crear Cédula</title>
+    <style>
+        :root {
+            --cr-blue: #0284c7;
+            --cr-red: #e11d48;
+            --bg-dark: #070b14;
+            --card-bg: #0f172a;
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tricolor-bar { height: 4px; width: 100%; background: linear-gradient(90deg, #0284c7 0% 30%, #ffffff 30% 45%, #e11d48 45% 55%, #ffffff 55% 70%, #0284c7 70% 100%); }
+
+        header {
+            background: #0b1120;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .btn-nav {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        main { flex: 1; padding: 2rem 1.5rem; max-width: 650px; margin: 0 auto; width: 100%; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group.full { grid-column: 1 / -1; }
+
+        label { font-size: 0.8rem; font-weight: 700; color: #cbd5e1; }
+        
+        input, select {
+            background: #070b14;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 0.75rem;
+            color: #fff;
+            outline: none;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        /* CONTENEDOR DE CARGA DE FOTO VISIBLE */
+        .photo-upload-zone {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: #070b14;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .preview-box {
+            width: 85px;
+            height: 95px;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            background: #0b1120;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        input[type="file"] {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            background: var(--cr-red);
+            color: #fff;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 800;
+            width: 100%;
+            margin-top: 1.5rem;
+            cursor: pointer;
+        }
+
+        .alert-success {
+            display: none;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #34d399;
+            padding: 0.8rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tricolor-bar"></div>
+
+    <header>
+        <div style="font-weight: 800;">🇨🇷 EXPEDIR CÉDULA DE IDENTIDAD</div>
+        <a href="principal.html" class="btn-nav">← Volver al Panel</a>
+    </header>
+
+    <main>
+        <div class="card">
+            <h2>🪪 Formulario de Expedición Oficial</h2>
+
+            <form id="formCrearCedula">
+                <div class="form-grid">
+                    
+                    <!-- CAMPO DE FOTO VISIBLE -->
+                    <div class="form-group full">
+                        <label>Fotografía del Personaje</label>
+                        <div class="photo-upload-zone">
+                            <div class="preview-box" id="previewBox">
+                                <span style="font-size: 2rem;">👤</span>
+                            </div>
+                            <div class="upload-controls">
+                                <input type="file" id="inputFoto" accept="image/*" required>
+                                <span style="font-size: 0.75rem; color: #64748b;">Sube una foto clara en formato JPG o PNG.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Nombre del Personaje (RP)</label>
+                        <input type="text" id="inputNombre" placeholder="Ej: CARLOS VARGAS" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>N.º Cédula</label>
+                        <input type="text" id="inputCedula" placeholder="TT-832998049" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Provincia</label>
+                        <select id="inputProvincia" required>
+                            <option value="Alajuela">Alajuela</option>
+                            <option value="San José">San José</option>
+                            <option value="Cartago">Cartago</option>
+                            <option value="Heredia">Heredia</option>
+                            <option value="Guanacaste">Guanacaste</option>
+                            <option value="Puntarenas">Puntarenas</option>
+                            <option value="Limón">Limón</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Usuario Roblox (Sin @)</label>
+                        <input type="text" id="inputUser" placeholder="Ej: TicoPlayer_123" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Discord</label>
+                        <input type="text" id="inputDiscord" placeholder="Ej: UserDiscord" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fecha Nacimiento</label>
+                        <input type="date" id="inputNacimiento" value="2010-01-01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fecha Vencimiento</label>
+                        <input type="date" id="inputVence" value="2027-09-01" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Género</label>
+                        <select id="inputGenero" required>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Masculino">Masculino</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Expedir y Guardar Cédula</button>
+            </form>
+
+            <div class="alert-success" id="alertSuccess">
+                ¡Cédula creada con éxito!
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById('formCrearCedula');
+        const alertSuccess = document.getElementById('alertSuccess');
+        const inputFoto = document.getElementById('inputFoto');
+        const previewBox = document.getElementById('previewBox');
+        let fotoBase64 = null;
+
+        // Mostrar vista previa en vivo cuando se elija el archivo
+        inputFoto.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    fotoBase64 = evt.target.result;
+                    previewBox.innerHTML = `<img src="${fotoBase64}" alt="Vista previa">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                fotoBase64 = null;
+                previewBox.innerHTML = `<span style="font-size: 2rem;">👤</span>`;
+            }
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nuevaCedula = {
+                id: Date.now(),
+                foto: fotoBase64,
+                nombre: document.getElementById('inputNombre').value.toUpperCase(),
+                cedula: document.getElementById('inputCedula').value,
+                provincia: document.getElementById('inputProvincia').value,
+                user: document.getElementById('inputUser').value,
+                discord: document.getElementById('inputDiscord').value,
+                nacimiento: document.getElementById('inputNacimiento').value,
+                vence: document.getElementById('inputVence').value,
+                genero: document.getElementById('inputGenero').value
+            };
+
+            const data = localStorage.getItem('tierra_tica_cedulas');
+            const cedulas = data ? JSON.parse(data) : [];
+
+            cedulas.unshift(nuevaCedula);
+            localStorage.setItem('tierra_tica_cedulas', JSON.stringify(cedulas));
+
+            form.reset();
+            fotoBase64 = null;
+            previewBox.innerHTML = `<span style="font-size: 2rem;">👤</span>`;
+            
+            alertSuccess.style.display = 'block';
+            setTimeout(() => { alertSuccess.style.display = 'none'; }, 4000);
+        });
+    </script>
+</body>
+</html>

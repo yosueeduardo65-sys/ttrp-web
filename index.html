@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tierra Tica RP - Conectando</title>
+    <style>
+        :root {
+            --cr-blue: #0284c7;
+            --cr-blue-glow: rgba(2, 132, 199, 0.4);
+            --cr-red: #e11d48;
+            --cr-red-glow: rgba(225, 29, 72, 0.4);
+            --cr-white: #f8fafc;
+            --bg-dark: #070b14;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(2, 132, 199, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(225, 29, 72, 0.12) 0%, transparent 40%);
+            color: var(--cr-white);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tricolor-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(
+                90deg, 
+                var(--cr-blue) 0% 30%, 
+                #ffffff 30% 45%, 
+                var(--cr-red) 45% 55%, 
+                #ffffff 55% 70%, 
+                var(--cr-blue) 70% 100%
+            );
+            box-shadow: 0 0 12px rgba(2, 132, 199, 0.6);
+            z-index: 10;
+        }
+
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: var(--cr-blue);
+            border-radius: 50%;
+            opacity: 0.6;
+            box-shadow: 0 0 6px var(--cr-blue-glow);
+            animation: floatParticle linear infinite;
+        }
+
+        .particle:nth-child(even) {
+            background-color: var(--cr-red);
+            box-shadow: 0 0 6px var(--cr-red-glow);
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+        }
+
+        .loading-card {
+            position: relative;
+            z-index: 5;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            width: 90%;
+            max-width: 480px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        .brand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .flag-emblem {
+            width: 42px;
+            height: 26px;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .flag-emblem .stripe-blue { background: #002b7f; height: 16.66%; }
+        .flag-emblem .stripe-white { background: #ffffff; height: 16.66%; }
+        .flag-emblem .stripe-red { background: #ce1126; height: 33.34%; }
+
+        .brand-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #93c5fd 70%, #fda4af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .rp-badge {
+            background: rgba(225, 29, 72, 0.2);
+            border: 1px solid rgba(225, 29, 72, 0.4);
+            color: #f43f5e;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .progress-container {
+            margin: 2rem 0 1rem 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        #loadingText {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #93c5fd;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #percentage {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--cr-white);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 99px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2px;
+        }
+
+        #progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--cr-blue) 0%, var(--cr-red) 100%);
+            border-radius: 99px;
+            box-shadow: 0 0 10px rgba(225, 29, 72, 0.5);
+            transition: width 0.3s ease;
+        }
+
+        #tip {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            min-height: 1.2rem;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="tricolor-bar"></div>
+    <div id="particles"></div>
+
+    <div id="loadingScreen" class="loading-card">
+        <div class="brand-container">
+            <div class="flag-emblem">
+                <div class="stripe-blue"></div>
+                <div class="stripe-white"></div>
+                <div class="stripe-red"></div>
+                <div class="stripe-white"></div>
+                <div class="stripe-blue"></div>
+            </div>
+            <h1 class="brand-title">TIERRA TICA RP</h1>
+            <span class="rp-badge">SISTEMA CIUDADANO OFFICIAL</span>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <span id="loadingText">CONECTANDO A BASE DE DATOS</span>
+                <span id="percentage">0%</span>
+            </div>
+            <div class="progress-track">
+                <div id="progress"></div>
+            </div>
+        </div>
+
+        <p id="tip">Cargando módulos de rol...</p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const progress = document.getElementById("progress");
+            const percentage = document.getElementById("percentage");
+            const loadingText = document.getElementById("loadingText");
+            const tip = document.getElementById("tip");
+            const particles = document.getElementById("particles");
+            const DESTINATION_URL = "principal.html";
+
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement("div");
+                particle.className = "particle";
+                particle.style.left = Math.random() * 100 + "%";
+                particle.style.top = Math.random() * 100 + "%";
+                particle.style.animationDuration = (4 + Math.random() * 8) + "s";
+                particle.style.animationDelay = Math.random() * 5 + "s";
+                const size = 2 + Math.random() * 2;
+                particle.style.width = size + "px";
+                particle.style.height = size + "px";
+                particles.appendChild(particle);
+            }
+
+            const messages = [
+                { percent: 0, text: "CONECTANDO CON EL REGISTRO", tip: "Verificando credenciales de ciudadano RP..." },
+                { percent: 35, text: "CARGANDO EXPEDIENTES", tip: "Sincronizando con la Fuerza Pública y la MOPT..." },
+                { percent: 75, text: "SISTEMA RP LISTO", tip: "Alistando cédula e identidad del personaje..." },
+                { percent: 100, text: "ACCESO AUTORIZADO", tip: "¡Bienvenido a Tierra Tica RP!" }
+            ];
+
+            function setProgress(value) {
+                value = Math.max(0, Math.min(100, value));
+                progress.style.width = value + "%";
+                percentage.textContent = Math.floor(value) + "%";
+                const msg = messages.reduce((prev, curr) => value >= curr.percent ? curr : prev);
+                loadingText.textContent = msg.text;
+                tip.textContent = msg.tip;
+            }
+
+            let val = 0;
+            const interval = setInterval(() => {
+                val += 5;
+                setProgress(val);
+                if (val >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => { window.location.href = DESTINATION_URL; }, 500);
+                }
+            }, 80);
+        });
+    </script>
+</body>
+</html>

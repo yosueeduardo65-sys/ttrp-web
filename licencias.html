@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tierra Tica RP - Licencias Emitidas</title>
+    <style>
+        :root {
+            --cr-blue: #0284c7;
+            --cr-red: #e11d48;
+            --bg-dark: #070b14;
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-muted: #94a3b8;
+        }
+
+        html, body {
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tricolor-bar { height: 4px; width: 100%; background: linear-gradient(90deg, #0284c7 0% 30%, #ffffff 30% 45%, #e11d48 45% 55%, #ffffff 55% 70%, #0284c7 70% 100%); }
+
+        header {
+            background: #0b1120;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .header-title { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .btn-nav {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        main { flex: 1; padding: 2rem 1.5rem; max-width: 1000px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .counter-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .counter-number span { font-size: 2.2rem; font-weight: 800; color: #38bdf8; }
+
+        .search-bar input {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            color: #fff;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .licencias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        @media (max-width: 480px) {
+            .licencias-grid { grid-template-columns: 1fr; }
+        }
+
+        /* TARJETA TIPO LICENCIA DE CONDUCIR */
+        .licencia-card {
+            background: linear-gradient(145deg, #0b2545 0%, #134074 100%);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            padding: 1.25rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .licencia-header { display: flex; justify-content: space-between; align-items: center; }
+        .licencia-title-box { display: flex; align-items: center; gap: 0.6rem; }
+
+        .cosevi-logo {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: #0284c7; display: flex;
+            align-items: center; justify-content: center; font-size: 0.9rem;
+        }
+
+        .rep-title { font-size: 0.65rem; color: #93c5fd; text-transform: uppercase; font-weight: 700; }
+        .doc-title { font-size: 0.95rem; font-weight: 900; color: #fff; }
+
+        .type-badge {
+            background: #f59e0b;
+            color: #000;
+            font-size: 0.75rem; font-weight: 900; padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+        }
+
+        .licencia-body { display: flex; gap: 1.25rem; align-items: flex-start; margin-top: 0.2rem; }
+
+        .photo-box {
+            width: 85px;
+            height: 95px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 2rem;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-info { display: flex; flex-direction: column; gap: 0.4rem; }
+        .field-label { font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; font-weight: 700; }
+        .field-value-main { font-size: 1.05rem; font-weight: 900; color: #fff; text-transform: uppercase; }
+        .field-value-id { font-size: 0.9rem; font-weight: 800; color: #38bdf8; }
+
+        .licencia-grid-fields {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0.6rem 1rem; margin-top: 0.2rem;
+        }
+
+        .field-item { display: flex; flex-direction: column; }
+        .field-val { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; }
+
+        .footer-line {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 0.5rem; display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem; color: #94a3b8; font-weight: 600;
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 3rem;
+            grid-column: 1 / -1;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px dashed var(--card-border);
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tricolor-bar"></div>
+
+    <header>
+        <div class="header-title"><span>🚗</span> COSEVI - REGISTRO DE LICENCIAS</div>
+        <div style="display: flex; gap: 0.5rem;">
+            <a href="crear-licencia.html" class="btn-nav" style="background: #0284c7; border: none;">+ Nueva Licencia</a>
+            <a href="principal.html" class="btn-nav">← Panel</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="counter-card">
+            <div>
+                <h2>Conductores Acreditados</h2>
+                <p style="color: #94a3b8; font-size: 0.85rem;">Base de datos de licencias aprobadas en Tierra Tica RP.</p>
+            </div>
+            <div class="counter-number">
+                <span id="numTotal">0</span>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="inputFilter" placeholder="🔍 Buscar por Nombre, Cédula, Tipo o Usuario Roblox...">
+        </div>
+
+        <div class="licencias-grid" id="containerLicencias"></div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('containerLicencias');
+            const numTotalEl = document.getElementById('numTotal');
+            const inputFilter = document.getElementById('inputFilter');
+
+            function obtenerLicencias() {
+                try {
+                    const data = localStorage.getItem('tierra_tica_licencias');
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    console.error("Error al leer localStorage:", e);
+                    return [];
+                }
+            }
+
+            function renderizar(query = '') {
+                const licencias = obtenerLicencias();
+                if (numTotalEl) numTotalEl.textContent = licencias.length;
+
+                const filtradas = licencias.filter(l => 
+                    (l.nombre && l.nombre.toLowerCase().includes(query.toLowerCase())) ||
+                    (l.cedula && l.cedula.includes(query)) ||
+                    (l.tipo && l.tipo.toLowerCase().includes(query.toLowerCase())) ||
+                    (l.user && l.user.toLowerCase().includes(query.toLowerCase()))
+                );
+
+                if (!container) return;
+
+                if (filtradas.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-msg">
+                            ${licencias.length === 0 ? '🚘 No hay licencias emitidas aún. ¡Completa el examen en "+ Nueva Licencia" para expedir la primera!' : '🔍 No se encontraron licencias que coincidan con la búsqueda.'}
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = filtradas.map(l => `
+                    <div class="licencia-card">
+                        <div class="licencia-header">
+                            <div class="licencia-title-box">
+                                <div class="cosevi-logo">🚘</div>
+                                <div>
+                                    <div class="rep-title">REPÚBLICA DE TIERRA TICA - COSEVI</div>
+                                    <div class="doc-title">LICENCIA DE CONDUCIR</div>
+                                </div>
+                            </div>
+                            <div class="type-badge">${l.tipo ? l.tipo.split(' ')[0] : 'B-1'}</div>
+                        </div>
+
+                        <div class="licencia-body">
+                            <div class="photo-box">
+                                ${l.foto ? `<img src="${l.foto}" alt="Foto Conductor">` : '👤'}
+                            </div>
+                            <div class="main-info">
+                                <div>
+                                    <div class="field-label">CONDUCTOR</div>
+                                    <div class="field-value-main">${l.nombre || 'N/A'}</div>
+                                </div>
+                                <div>
+                                    <div class="field-label">N.º IDENTIFICACIÓN</div>
+                                    <div class="field-value-id">${l.cedula || 'N/A'}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="licencia-grid-fields">
+                            <div class="field-item">
+                                <span class="field-label">CATEGORÍA COMPLETA</span>
+                                <span class="field-val">${l.tipo || 'N/A'}</span>
+                            </div>
+                            <div class="field-item">
+                                <span class="field-label">USUARIO ROBLOX</span>
+                                <span class="field-val">@${l.user || 'N/A'}</span>
+                            </div>
+                            <div class="field-item">
+                                <span class="field-label">TIPO SANGRE</span>
+                                <span class="field-val">${l.sangre || 'N/A'}</span>
+                            </div>
+                            <div class="field-item">
+                                <span class="field-label">EMISIÓN</span>
+                                <span class="field-val">${l.emision || 'N/A'}</span>
+                            </div>
+                            <div class="field-item">
+                                <span class="field-label">VENCIMIENTO</span>
+                                <span class="field-val">${l.vence || 'N/A'}</span>
+                            </div>
+                            <div class="field-item">
+                                <span class="field-label">ESTADO</span>
+                                <span class="field-val" style="color: #34d399;">VIGENTE</span>
+                            </div>
+                        </div>
+
+                        <div class="footer-line">
+                            <span>COSEVI OFICIAL</span>
+                            <span>DOCUMENTO DIGITAL VERIFICADO</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            if (inputFilter) {
+                inputFilter.addEventListener('input', (e) => renderizar(e.target.value));
+            }
+
+            renderizar();
+        });
+    </script>
+</body>
+</html>
